@@ -20,21 +20,22 @@ public class productClass {
 
     connection con = new connection();
 
-    public int addProduct(String productName, int quantity, Object price) {
+    public int addProduct(String categoryName, String productName, int quantity, Object price) {
         int r = 0;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = (Connection) DriverManager.getConnection(con.url, con.username, con.password);
 
-            String sql = "insert into tblproduct values(null,?,?,?);";
+            String sql = "insert into tblproduct values(null,?,?,?,?);";
             PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
             String np = price.toString();
             float newprice = Float.parseFloat(np);
-
-            pstmt.setString(1, productName);
-            pstmt.setInt(2, quantity);
-            pstmt.setFloat(3, newprice);
+            
+            pstmt.setString(1, categoryName);
+            pstmt.setString(2, productName);
+            pstmt.setInt(3, quantity);
+            pstmt.setFloat(4, newprice);
 
             r = pstmt.executeUpdate();
 
